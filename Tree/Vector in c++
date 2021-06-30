@@ -1,0 +1,29 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+
+// vector-> when it's space finished it will double it's size
+
+int main()
+{
+    vector<int>v;// static declaration
+    //vactor<int>*v=new vactor<int>()---->Dynamic declaration
+    int i,a;
+    int n;
+    cin>>n;
+    for(i=0;i<n;i++)
+    {
+        cin>>a;
+        v.push_back(a);  //inserting element
+        
+    }
+  
+    for(i=0;i<v.size();i++)
+    {
+        cout<<"capacity"<<v.capacity()<<endl; //current capacity
+        cout<<v.at(i)<<endl;     // element at index i , it is more safer than square  bracket []
+        cout<<"size"<<v.size()<<endl; //size of the vector
+    }
+
+    return 0;
+}
