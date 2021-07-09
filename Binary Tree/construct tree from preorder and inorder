@@ -1,0 +1,30 @@
+Binarynode<int>* buildtreehelper(int* in,int* pre,int ins,int inl,int pres,int prel)
+{
+    int rootdata=pre[pres];
+    int rootindex=-1;
+    for(int i=0;i<=inl;i++)
+    {
+        if(rootdata==in[i])
+        {
+            rootindex=i;
+        }
+    }
+    int lins=ins;
+    int linl=rootindex-1;
+    int lpres=pres+1;
+    int lprel=lins-linl+lpres;
+    int rpres=lprel+1;
+    int rprel=prel;
+    int rins=rootindex+1;
+    int rinl=inl;
+    Binarynode<int>* root=new Binarynode<int>(rootdata);
+    root->left=buildtreehelper(in,pre,lins,linl,lpres,lprel);
+    root->right=buildtreehelper(in,pre,rins,rinl,rpres,rprel);
+    return root;
+}
+Binarynode<int>* binarytree(int* in,int inlength,int * pre,int prelength)
+{
+    return buildtreehelper(in,pre,0,inlength-1,0,prelength-1);
+    
+    
+}
