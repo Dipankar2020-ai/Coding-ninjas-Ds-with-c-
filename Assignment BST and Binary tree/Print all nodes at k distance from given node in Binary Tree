@@ -140,3 +140,13 @@ int printKNodes(Binarynode<int>* root, int target , int k){
       }
       return -1;
    }
+   int main()
+  {
+     Binarynode<int>* root=takeinputlevelwise();
+     int target;
+     int k;
+     cin>>target>>k;
+     
+   printKNodes(root, target, k);
+     
+ } 
