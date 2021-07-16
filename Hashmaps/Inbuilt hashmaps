@@ -1,0 +1,40 @@
+
+#include <iostream>
+#include<unordered_map>
+#include<string>
+using namespace std;
+
+int main()
+{
+    unordered_map<string,int>ourmap;
+    pair<string,int>p("abc",1);
+    ourmap.insert(p);
+    ourmap["def"]=2;
+    cout<<ourmap["abc"]<<endl;
+    cout<<ourmap.at("def")<<endl;
+    cout<<"size: "<<ourmap.size()<<endl;
+    cout<<ourmap["ghi"]<<endl;
+    cout<<ourmap["ijk"]<<endl;
+    if(ourmap.count("ghi")>0)
+    {
+        cout<<"ghi is present"<<endl;
+    }
+     if(ourmap.count("ijk")>0)
+    {
+        cout<<"ijk is present"<<endl;
+    }
+    cout<<"size: "<<ourmap.size()<<endl;
+    ourmap.erase("ijk");
+    
+    cout<<"size: "<<ourmap.size()<<endl;
+     if(ourmap.count("ijk")>0)
+     {
+        cout<<"ijk is present"<<endl;
+    }
+    else
+    {
+        cout<<"ijk is not present"<<endl;
+    }
+    
+    return 0;
+}
