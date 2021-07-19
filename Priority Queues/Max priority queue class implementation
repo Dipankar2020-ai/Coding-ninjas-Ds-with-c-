@@ -1,0 +1,95 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+class maxpriority
+{
+    vector<int> pq;
+    public:
+   bool isempty()
+    {
+        return pq.size()==0;
+    }
+    int getmax()
+    {
+        if(isempty())
+        {
+            return 0 ;
+        }
+        return pq[0];
+    }
+    int getsize()
+    {
+        return pq.size();
+    }
+    void insert(int element)
+    {
+        
+        pq.push_back(element);
+        int childindex=pq.size()-1;
+        while(childindex>0)
+        {
+            int parentindex=(childindex-1)/2;
+            if(pq[parentindex]<pq[childindex])
+            {
+                int temp=pq[parentindex];
+                pq[parentindex]=pq[childindex];
+                pq[childindex]=temp;
+            }
+            else
+            {
+                break;
+            }
+            childindex=parentindex;
+        }
+    }
+    int removemax()
+    {
+        int ans=pq[0];
+        pq[0]=pq[pq.size()-1];
+        pq.pop_back();
+        int parentindex=0;
+        int leftchildindex=2*parentindex+1;
+        int rightchildindex=2*parentindex+2;
+        while(leftchildindex<pq.size())
+        {
+            int maxindex=parentindex;
+            if(pq[leftchildindex]>pq[maxindex])
+            {
+                maxindex=leftchildindex;
+            }
+            if(rightchildindex<pq.size() && pq[rightchildindex]>pq[maxindex])
+            {
+                maxindex=rightchildindex;
+            }
+            if(maxindex==parentindex)
+            {
+                break;
+            }
+            int temp=pq[maxindex];
+            pq[maxindex]=pq[parentindex];
+            pq[parentindex]=temp;
+            parentindex=maxindex;
+            leftchildindex=2*parentindex+1;
+            rightchildindex=2*parentindex+2;
+        }
+        return ans;
+    }
+};
+int main()
+{
+    maxpriority pq;
+    pq.insert(15);
+    pq.insert(2);
+    pq.insert(20);
+    pq.insert(9);
+    pq.insert(0);
+    pq.insert(100);
+    cout<<pq.getsize()<<endl;
+    cout<<pq.getmax()<<endl;
+    while(!pq.isempty())
+    {
+        cout<<pq.removemax()<<" ";
+    }
+
+    return 0;
+}
