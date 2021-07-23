@@ -1,0 +1,44 @@
+#include <iostream>
+
+using namespace std;
+bool checkmax(int arr[],int n)
+{
+    
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]<arr[2*i+1] && 2*i+1<n)
+        {
+            return false;
+        }
+        if(arr[i]<arr[2*i+2] && 2*i+2<n)
+        {
+            return false;
+        }
+        if(2*i+1>=n && 2*i+2>=n)
+        {
+            break;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>arr[i];
+    }
+    if(checkmax(arr,n))
+    {
+        cout<<"true";
+    }
+    else
+    {
+        cout<<"false";
+    }
+
+    return 0;
+}
