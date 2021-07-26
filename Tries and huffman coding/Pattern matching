@@ -1,0 +1,163 @@
+
+#include <iostream>
+#include<string>
+#include<vector>
+using namespace std;
+class trienode
+{
+    public:
+    char data;
+    trienode** children;
+    bool isterminal;
+    trienode(char data)
+    {
+        this->data=data;
+        children=new trienode*[26];
+        for(int i=0;i<26;i++)
+        {
+            children[i]=NULL;
+        }
+        isterminal=false;
+    }
+};
+class trie
+{
+    trienode* root;
+    public:
+    trie()
+    {
+        root=new trienode('\0');
+    }
+    void insert(trienode* root,string input)
+    {
+        //Base case
+        if(input.size()==0)
+        {
+            root->isterminal=true;
+            return;
+        }
+        int index=input[0]-'a';
+        trienode* child;
+        //small calculation
+        if(root->children[index]!=NULL)
+        {
+            child=root->children[index];
+        }
+        else
+        {
+            child=new trienode(input[0]);
+            root->children[index]=child;
+        }
+        //recursive call
+        insert(child,input.substr(1));
+    }
+    void insert(string input)
+    {
+        insert(root,input);
+    }
+    bool search(trienode* root,string input)
+    {
+        if(input.size()==0 && root->isterminal==true)
+        {
+            return true;
+        }
+         if(input.size()==0 && root->isterminal!=true)
+         {
+            return false;
+         }
+         int index=input[0]-'a';
+         if(root->children[index]!=NULL)
+         {
+             return search(root->children[index],input.substr(1));
+         }
+         else
+         {
+             return false;
+         }
+    }
+    bool search(string input)
+    {
+        return search(root,input);
+    }
+    void removeward(string input)
+    {
+        removeward(root,input);
+    }
+    void removeward(trienode* root,string input)
+    {
+        if(input.size()==0)
+        {
+            root->isterminal=false;
+            return;
+        }
+        trienode* child;
+        int index=input[0]-'a';
+        if(root->children[index]!=NULL)
+        {
+            child=root->children[index];
+        }
+        else
+        {
+            return;
+        }
+        removeward(child,input.substr(1));
+        if(child->isterminal==false)
+        {
+            for(int i=0;i<26;i++)
+            {
+                if(child->children[i]!=NULL)
+                {
+                    return;
+                }
+            }    
+            delete child;
+            root->children[index]=NULL;
+
+        }
+    }
+  bool patternMatching(vector<string> vect, string pattern) {
+		// Complete this function
+		// Return true or false
+        for(int i=0;i<vect.size();i++)
+        {
+            while(vect[i].size()!=0)
+            {
+                insert(vect[i]);
+                vect[i]=vect[i].substr(1);
+                
+            }
+        }
+    return search(pattern);
+  }
+};
+
+int main()
+{
+    trie t;
+    /*t.insert("and");
+    cout<<t.search("and")<<endl;
+    cout<<t.search("ans")<<endl;
+    t.removeward("and");
+    cout<<t.search("and")<<endl;*/
+    vector<string>vect;
+    int n;
+    cin>>n;
+    
+    for(int i=0;i<n;i++)
+    {
+        string str;
+        cin>>str;
+        vect.push_back(str);
+    }
+    string str1;
+    cin>>str1;
+   if (t.patternMatching(vect,str1))
+   {
+       cout<<"true";
+   }
+   else
+   {
+       cout<<"false";
+   }
+    return 0;
+}
