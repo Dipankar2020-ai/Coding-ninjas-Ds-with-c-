@@ -1,0 +1,39 @@
+
+#include <iostream>
+
+using namespace std;
+int getmaxmoney(int input[],int n)
+{
+    if(n==0)
+    {
+        return 0;
+    }
+    if(n==1)
+    {
+        return input[0];
+    }
+    if(n==2)
+    {
+        return max(input[0],input[1]);
+    }
+    int dp[n+1];
+    dp[0]=input[0];
+    dp[1]=max(input[0],input[1]);
+    for(int i=2;i<=n;i++)
+    {
+        dp[i]=max(input[i]+dp[i-2],dp[i-1]);
+    }
+    return dp[n-1];
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int input[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>input[i];
+    }
+    cout<<getmaxmoney(input,n);
+}
