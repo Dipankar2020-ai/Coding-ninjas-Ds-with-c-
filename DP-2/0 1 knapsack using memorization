@@ -1,0 +1,45 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+int knapsack(int* weight,int* value,int n,int maxweights,int dp[101][21])
+{
+    if(n==0|| maxweights==0)
+    {
+        return 0;
+    }
+    if(dp[maxweights][n]!=-1)
+    {
+        return dp[maxweights][n];
+    }
+    if(weight[0]>maxweights)
+    {
+        return dp[maxweights][n]= knapsack(weight+1,value+1,n-1,maxweights,dp);
+    }
+    
+    int x=knapsack(weight+1,value+1,n-1,maxweights-weight[0],dp)+value[0];
+    int y=knapsack(weight+1,value+1,n-1,maxweights,dp);
+    return dp[maxweights][n]=max(x,y);
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int weight[n];
+    int value[n];
+    int dp[101][21];
+    memset(dp, -1, sizeof(dp));
+    for(int i=0;i<n;i++)
+    {
+        cin>>weight[i];
+    }
+    for(int i=0;i<n;i++)
+    {
+        cin>>value[i];
+    }
+    int maxweights;
+    cin>>maxweights;
+    cout<<knapsack(weight,value,n,maxweights,dp);
+
+    return 0;
+}    
