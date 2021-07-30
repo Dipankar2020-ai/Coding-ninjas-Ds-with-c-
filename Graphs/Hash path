@@ -1,0 +1,81 @@
+
+#include <iostream>
+#include<queue>
+using namespace std;
+
+bool printdfs(int**edges,int n,bool* visited,int s,int e)
+{
+    
+    if(edges[s][e]==true)
+    {
+        return true;
+    }
+    
+    visited[s]=true;
+    bool res=false;
+    for(int i=0;i<n;i++)
+    {
+       if(!visited[i] && edges[s][i]==1)
+       {
+           res=printdfs(edges,n,visited, i, e);
+       }
+       if(res==true)
+       {
+           return true;
+       }
+    }
+    return res;
+}
+
+bool DFS(int** edges,int n,int s,int e)
+{
+    bool *visited=new bool[n];
+    for(int i=0;i<n;i++)
+    {
+        visited[i]=false;
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(!visited[i])
+        {
+           return  printdfs(edges,n,visited,i,e);
+        }
+    }
+}
+
+int main()
+{
+    int n,e;
+    cin>>n>>e;
+    int **edges=new int*[n];
+    for(int i=0;i<n;i++)
+    {
+        edges[i]=new int[n];
+        for(int j=0;j<n;j++)
+        {
+            edges[i][j]=0;
+        }
+    }
+    for(int i=0;i<e;i++)
+    {
+        int f,s;
+        cin>>f>>s;
+        edges[f][s]=1;
+        edges[s][f]=1;
+        
+    }
+    int s,v;
+    cin>>s>>v;
+    cout<<"hash path :"<<endl;
+    
+    if(DFS(edges,n,s,v))
+    {
+        cout<<"true";
+    }
+    else
+    {
+        cout<<"false";
+    }
+  
+    return 0;
+}
